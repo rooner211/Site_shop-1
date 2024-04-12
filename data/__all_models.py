@@ -1,1 +1,2 @@
-from .Category import Category
+from . import category
+from . import products

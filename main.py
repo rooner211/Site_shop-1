@@ -1,44 +1,34 @@
 from flask import Flask, render_template, request, redirect
-from data.Category import User
+from flask import Flask, render_template
 from data import db_session
+from flask_login import LoginManager
+from data.category import Category 
+from flask_login import login_user
+from flask_login import LoginManager
+from flask_login import logout_user
+from flask_login import login_required
 
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-users = []
-
-
-db_session.global_init("db/blogs.db")
-session = db_session.create_session()
-
-
-
 @app.route('/')
 def index():
-    return '<h1>Добро пожаловать!</h1><a href="/register">Регистрация</a>'
+    db_session.global_init("db/shopy.db")
+    session = db_session.create_session()
+    categories = session.query(Category).all()
+    names = [category.name for category in categories]
+    session.close()
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        password = request.form['password']
-        phone_number = request.form['phone_number']
-        name = request.form['name']
-        new_user = {'password': password, 'phone_number': phone_number, 'name': name}
-        users.append(new_user)
-        return redirect('/')
-    else:
-        return '''
-            <h2>Регистрация</h2>
-            <form method="post">
-                <label>Пароль:</label><br>
-                <input type="password" name="password" required><br>
-                <label>Номер телефона:</label><br>
-                <input type="text" name="phone_number" required><br>
-                <label>Имя:</label><br>
-                <input type="text" name="name" required><br>
-                <input type="submit" value="Зарегистрироваться">
-            </form>
-        '''
+
+    return render_template('index.html', categories=names)
+
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         return redirect('/')
+#     else:
+#         return render_template('login.html')
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    app.run(debug=True)
