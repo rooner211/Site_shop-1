@@ -1,4 +1,3 @@
-import datetime
 import sqlalchemy
 from sqlalchemy import orm
 from .db_session import SqlAlchemyBase
@@ -14,4 +13,4 @@ class Products(SqlAlchemyBase):
     stock = sqlalchemy.Column(sqlalchemy.Integer)
     category_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("category.category_id"))
-    Categ = orm.relationship('Category')
+    categ = orm.relationship('Category')

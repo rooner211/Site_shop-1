@@ -8,4 +8,4 @@ class Category(SqlAlchemyBase):
     __tablename__ = 'category'
     category_id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String)
-    news = orm.relationship("Products", back_populates='Categ')
+    products = orm.relationship("Products", back_populates='categ')
