@@ -1,8 +1,36 @@
-{% if current_user.is_authenticated %}
-    <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
-{% else %}
-    <p>
-        <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
-        <a class="btn btn-success" href="/login">Войти</a>
-    </p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игровой портал</title>
+    <link rel="stylesheet" href="static/css/base.css">
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <h1>GameZone</h1>
+    </div>
+    <div>
+        <button class="btn btn-primary mr-2" onclick="window.location.href='/reg'">Регистрация</button>
+        <button class="btn btn-primary">Логин</button>
+        <button class="cart-button ml-2" onclick="window.location.href='/cart'">
+            <img src="static/img/kart.png" alt="Корзина">
+        </button>
+    </div>
+</div>
+
+<div class="categories">
+    {% for category in categories %}
+        <button class="btn btn-outline-primary">{{ category }}</button>
+    {% endfor %}
+</div>
+
+<div class="search-bar">
+    <input type="text" placeholder="Поиск..." class="mr-2">
+    <button class="btn btn-primary">Искать</button>
+</div>
+
+</body>
+</html>

@@ -1,8 +1,9 @@
 import sqlalchemy
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
+from flask_login import UserMixin
 
-class User(SqlAlchemyBase):
+class User(SqlAlchemyBase, UserMixin):
     __tablename__ = 'users'
 
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
