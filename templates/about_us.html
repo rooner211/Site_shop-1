@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameZone</title>
+<link rel="stylesheet" href="static/css/base.css">
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container {
+        text-align: center;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        max-width: 80%;
+    }
+    #phone {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+<button class="btn btn-primary mr-2" onclick="window.location.href='/'">На главную</button>
+<div class="container">
+    <p>Мы - GameZone, наша задача предоставлять вам самые топовые игры по самым низким ценам</p>
+    <p>Обратная связь: <span id="phone">+7 952(812)-14-88</span></p>
+</div>
+
+<script>
+    document.getElementById("phone").addEventListener("click", function() {
+        const phoneNumber = document.getElementById("phone").innerText;
+        navigator.clipboard.writeText(phoneNumber)
+            .then(() => {
+                alert("Номер телефона скопирован: " + phoneNumber);
+            })
+            .catch(err => {
+                console.error('Не удалось скопировать номер: ', err);
+            });
+    });
+</script>
+</body>
+</html>

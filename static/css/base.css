@@ -1,0 +1,110 @@
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
+
+body {
+    background: linear-gradient(to bottom right, #282c34, #0f1217); /* Градиентный фон */
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Делаем контейнер тела (body) на всю высоту видимого экрана */
+    display: flex;
+    flex-direction: column; /* Устанавливаем направление столбцом, чтобы футер был внизу */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    color: #ffcc00;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search-bar {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.search-bar input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+.categories {
+    margin-top: 20px;
+}
+
+.categories button {
+    margin: 5px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.categories button:hover {
+    background-color: #333;
+}
+
+.cart-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.cart-button img {
+    width: 30px;
+    height: auto;
+}
+
+.footer {
+    background-color: #111; /* Очень тёмно-серый фон */
+    color: #fff; /* Белый цвет текста */
+    padding: 10px;
+    font-size: 8px; /* Треть от изначального размера шрифта */
+    position: fixed; /* Фиксированное позиционирование */
+    bottom: 0; /* Футер будет прижат к нижней части окна */
+    width: 100%; /* Футер будет на всю ширину экрана */
+    height: 50px; /* Высота втрое меньше */
+    display: flex; /* Расположим содержимое футера в строку */
+    justify-content: space-between; /* Разместим элементы по краям */
+    align-items: center; /* Выровняем элементы по вертикали */
+}
+
+.footer button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff; /* Белый цвет текста кнопки */
+    transition: background-color 0.3s;
+}
+
+.footer button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Прозрачный фон при наведении */
+}
+

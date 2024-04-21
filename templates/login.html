@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход пользователя</title>
+    <link rel="stylesheet" href="static/css/reg.css">
+</head>
+<body>
+    <button class="btn btn-primary mr-2" onclick="window.location.href='/'">На главную</button>
+    <h1>Вход пользователя</h1>
+    <form action="/login" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="hashed_password">Пароль:</label>
+        <input type="password" id="hashed_password" name="hashed_password" required>
+        <input type="submit" id="loginButton" value="Войти" >
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <p class="register-message">Не зарегистрированы? <a href="/register">Зарегистрируйтесь</a>.</p>
+
+    <script>
+        function checkForm() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("hashed_password").value;
+
+            var errorMessage = document.querySelector(".error-message");
+
+            if (email !== "" && password !== "") {
+                document.getElementById("loginButton").disabled = false;
+                errorMessage.style.display = "none";
+            } else {
+                document.getElementById("loginButton").disabled = true;
+                errorMessage.style.display = "block";
+            }
+        }
+        var inputs = document.querySelectorAll("input");
+        inputs.forEach(function(input) {
+            input.addEventListener("input", checkForm);
+        });
+    </script>
+</body>
+</html>

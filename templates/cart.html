@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #444;
+            border: 1px solid #666;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .subtotal {
+            font-size: 20px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn btn-primary mr-2" onclick="window.location.href='/'">На главную</button>
+    <div class="container">
+        <div class="header">
+            <div class="title">Ваши товары:</div>
+            <div class="subtotal">Сумма покупки: $100</div>
+        </div>
+        <!-- Здесь будет содержимое корзины -->
+        <div class="buttons">
+            <button class="btn btn-primary btn-lg" onclick="window.location.href='/kard'">Оплата</button>
+        </div>
+    </div>
+</body>
+</html>

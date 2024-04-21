@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/kard.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="card_number">Номер карты:</label>
+            <input type="text" id="card_number" name="card_number" placeholder="Введите номер карты">
+        </div>
+        <div class="form-group">
+            <label for="expiration_date">Срок действия:</label>
+            <input type="text" id="expiration_date" name="expiration_date" placeholder="ММ/ГГ">
+        </div>
+        <div class="form-group">
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" placeholder="CVV">
+        </div>
+        <div class="button-wrapper">
+            <button class="btn btn-primary mr-2" id="payButton" onclick="pay()" disabled>Оплатить</button>
+        </div>
+        <div id="paymentMessage" class="text-success" style="display: none;">Оплата прошла успешно!</div>
+    </div>
+
+    <script>
+        function pay() {
+            // Эмулируем задержку для имитации процесса оплаты
+            setTimeout(function() {
+                document.getElementById('paymentMessage').style.display = 'block';
+                // Перенаправляем пользователя на главную страницу через 2 секунды
+                setTimeout(function() {
+                    window.location.href = '/';
+                }, 2000);
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const cardNumberInput = document.getElementById('card_number');
+            const expirationDateInput = document.getElementById('expiration_date');
+            const cvvInput = document.getElementById('cvv');
+            const payButton = document.getElementById('payButton');
+
+            function checkInputs() {
+                const cardNumberValue = cardNumberInput.value.trim();
+                const expirationDateValue = expirationDateInput.value.trim();
+                const cvvValue = cvvInput.value.trim();
+
+                if (cardNumberValue !== '' && expirationDateValue !== '' && cvvValue !== '') {
+                    payButton.disabled = false;
+                } else {
+                    payButton.disabled = true;
+                }
+            }
+
+            cardNumberInput.addEventListener('input', checkInputs);
+            expirationDateInput.addEventListener('input', checkInputs);
+            cvvInput.addEventListener('input', checkInputs);
+        });
+    </script>
+</body>
+</html>

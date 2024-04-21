@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователя</title>
+    <link rel="stylesheet" href="static/css/reg.css">
+</head>
+<body>
+    <button class="btn btn-primary mr-2" onclick="window.location.href='/'">На главную</button>
+    <h1>Регистрация пользователя</h1>
+    <form action="/register" method="post">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="nickname">Никнейм:</label>
+        <input type="text" id="nickname" name="nickname" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="hashed_password">Пароль:</label>
+        <input type="password" id="hashed_password" name="hashed_password" required>
+
+        <label for="country">Страна:</label>
+        <input type="text" id="country" name="country" required>
+
+        <input type="submit" id="registerButton" value="Зарегистрироваться" >
+    </form>
+
+    <p class="error-message">Все поля должны быть заполнены!</p>
+    <p class="register-message">Зарегистрированы? <a href="/login">Войдите</a>.</p>
+    <script>
+        // Функция для проверки заполненности всех полей формы
+        function checkForm() {
+            var name = document.getElementById("name").value;
+            var nickname = document.getElementById("nickname").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var country = document.getElementById("country").value;
+
+            var errorMessage = document.querySelector(".error-message");
+
+            // Если все поля заполнены, делаем кнопку активной
+            if (name !== "" && nickname !== "" && email !== "" && password !== "" && country !== "") {
+                document.getElementById("registerButton").disabled = false;
+                errorMessage.style.display = "none";
+            } else {
+                // В противном случае делаем кнопку неактивной и показываем сообщение об ошибке
+                document.getElementById("registerButton").disabled = true;
+                errorMessage.style.display = "block";
+            }
+        }
+
+        // Добавляем обработчик события для каждого поля ввода
+        var inputs = document.querySelectorAll("input");
+        inputs.forEach(function(input) {
+            input.addEventListener("input", checkForm);
+        });
+    </script>
+</body>
+</html>
