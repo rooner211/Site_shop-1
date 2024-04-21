@@ -108,3 +108,32 @@ body {
     background-color: rgba(255, 255, 255, 0.1); /* Прозрачный фон при наведении */
 }
 
+.product-card {
+    position: relative;
+    width: 300px; /* Ширина карточки */
+    height: 200px; /* Высота карточки */
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: inline-block; /* Добавляем этот стиль для растягивания карточек по ширине */
+    background-size: cover; /* Для занимания всей площади заданной ширины и высоты */
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    border-radius: 10px; /* Чтобы оверлей также соответствовал радиусу границ карточки */
+}
+
+.product-card h3,
+.product-card p,
+.product-card button {
+    position: relative;
+    z-index: 1;
+}

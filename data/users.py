@@ -3,10 +3,10 @@ from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 from flask_login import UserMixin
 
+
 class User(SqlAlchemyBase, UserMixin):
     __tablename__ = 'users'
-
-    user_id = sqlalchemy.Column(sqlalchemy.Integer,
+    id = sqlalchemy.Column(sqlalchemy.Integer,
                                 primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     nickname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
