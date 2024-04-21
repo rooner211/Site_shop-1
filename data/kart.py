@@ -8,7 +8,7 @@ class Kart(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                                 primary_key=True, autoincrement=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("users.id"))
+                                sqlalchemy.ForeignKey("users.user_id"))
     user = orm.relationship('User')
     products_id = sqlalchemy.Column(sqlalchemy.Integer,
                                     sqlalchemy.ForeignKey("products.products_id"))
