@@ -12,5 +12,5 @@ class Products(SqlAlchemyBase):
     image = sqlalchemy.Column(sqlalchemy.String)
     stock = sqlalchemy.Column(sqlalchemy.Integer)
     category_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("category.category_id"))
+                                    sqlalchemy.ForeignKey("category.category_id"))
     categ = orm.relationship('Category')

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GameZone</title>
-<link rel="stylesheet" href="static/css/base.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
 <style>
     body, html {
         height: 100%;
@@ -46,5 +46,8 @@
             });
     });
 </script>
+    <footer class="container">
+        <p>© 2024 GameZone, Cop. · <a href="/abot">About</a></p>
+    </footer>
 </body>
 </html>
