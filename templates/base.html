@@ -47,7 +47,6 @@
             <a class="navbar-brand" href="/logout">{{ current_user.nickname }}</a>
             <button class="cart-button ml-2">
                 <a class="navbar-brand" href="/cart"><img src="/static/img/kart.png" alt="Корзина"></a>
-
             </button>
         {% else %}
             <p>
@@ -65,6 +64,15 @@
     {% endfor %}
 </div>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" style="color: red;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
 {% for product in products %}
     <div class="product-card" style="background-image: url('{{ url_for('static', filename='img/' + product.image) }}');">

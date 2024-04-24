@@ -42,22 +42,80 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        /* Устанавливаем фиксированный размер для изображений */
+        img.product-image {
+            width: 250px; /* Измените значение по вашему усмотрению */
+            height: 250px; /* Измените значение по вашему усмотрению */
+            object-fit: cover; /* Обрезаем изображение до указанных размеров */
+        }
     </style>
 </head>
 <body>
     <button class="btn btn-primary mr-2" onclick="window.location.href='/'">На главную</button>
     <div class="container">
-        <div class="header">
-            <div class="title">Ваши товары:</div>
-            <div class="subtotal">Сумма покупки: $100</div>
+        <h2>Ваши товары:</h2>
+         {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+                <div class="alert alert-success" role="alert" id="success-alert">
+                    {{ messages[0] }}
+                </div>
+                <script>
+                    setTimeout(function() {
+                        document.getElementById('success-alert').style.display = 'none';
+                    }, 3000);
+                </script>
+            {% endif %}
+        {% endwith %}
+        {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+                <div class="alert alert-danger" role="alert" id="error-alert">
+                    {{ messages[0] }}
+                </div>
+                <script>
+                    setTimeout(function() {
+                        document.getElementById('error-alert').style.display = 'none';
+                    }, 3000);
+                </script>
+            {% endif %}
+        {% endwith %}
+        {% for product in cart_products %}
+        <div class="product">
+            <h3>{{ product.name }}</h3>
+            <img src="{{ url_for('static', filename='img/' + product.image) }}" alt="{{ product.name }}" class="product-image">
+            <p>Цена: ${{ product.price }}</p>
+            <form action="/remove_from_cart/{{ product.products_id }}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Удалить</button>
+            </form>
         </div>
-        <!-- Здесь будет содержимое корзины -->
-        <div class="buttons">
-            <button class="btn btn-primary btn-lg" onclick="window.location.href='/kard'">Оплата</button>
-        </div>
+        {% endfor %}
+        {% set total_product_price = cart_products | map(attribute='price') | sum %}
+        {% set total_product_price_rounded = total_product_price | round(2) %}
+        <p>Общая сумма цен продуктов в корзине: ${{ total_product_price_rounded }}</p>
+        {% if total_product_price > 0 %}
+            <button class="btn btn-primary mr-2" onclick="window.location.href='/kard'">Оформить заказ</button>
+        {% else %}
+            <p>Невозможно оформить заказ, так как сумма товаров в корзине равна 0</p>
+        {% endif %}
     </div>
-    <footer class="container">
-        <p>© 2024 GameZone, Cop. · <a href="/abot">About</a></p>
-    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const successAlert = document.getElementById('success-alert');
+            const errorAlert = document.getElementById('error-alert');
+
+            if (successAlert) {
+                setTimeout(function() {
+                    successAlert.style.display = 'none';
+                }, 3000);
+            }
+
+            if (errorAlert) {
+                setTimeout(function() {
+                    errorAlert.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 </html>

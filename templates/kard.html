@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+        <!-- Форма оплаты -->
         <div class="form-group">
             <label for="card_number">Номер карты:</label>
             <input type="text" id="card_number" name="card_number" placeholder="Введите номер карты">
@@ -22,23 +23,43 @@
             <input type="text" id="cvv" name="cvv" placeholder="CVV">
         </div>
         <div class="button-wrapper">
+            <!-- Кнопка оплаты -->
             <button class="btn btn-primary mr-2" id="payButton" onclick="pay()" disabled>Оплатить</button>
         </div>
+        <!-- Сообщение об успешной оплате -->
         <div id="paymentMessage" class="text-success" style="display: none;">Оплата прошла успешно!</div>
     </div>
 
+    <!-- Скрипт для оплаты и очистки корзины -->
     <script>
         function pay() {
             // Эмулируем задержку для имитации процесса оплаты
             setTimeout(function() {
                 document.getElementById('paymentMessage').style.display = 'block';
-                // Перенаправляем пользователя на главную страницу через 2 секунды
-                setTimeout(function() {
-                    window.location.href = '/';
-                }, 2000);
+                // Отправляем запрос на сервер для очистки корзины
+                fetch('/clear_cart', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // В случае успешного удаления перезагружаем страницу
+                        setTimeout(function() {
+                            window.location.href = '/';
+                        }, 2000);
+                    } else {
+                        console.error('Failed to clear cart');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             }, 1000);
         }
 
+        // Обработчик события для проверки заполненности полей формы
         document.addEventListener('DOMContentLoaded', function () {
             const cardNumberInput = document.getElementById('card_number');
             const expirationDateInput = document.getElementById('expiration_date');

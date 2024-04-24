@@ -1,15 +1,13 @@
 import sqlite3
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, jsonify
 from flask import request, redirect
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
-
 from data import db_session
 from data.category import Category
 from data.users import User
 from data.kart import Kart
 from data.products import Products
 import requests
-import json
 
 url = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
@@ -66,18 +64,14 @@ def category(category_id):
 def buy_game(products_id):
     session = db_session.create_session()
     products = session.query(Products).filter(Products.products_id == products_id).first()
-
     if not current_user.is_authenticated:
-        return ("ERROR. NOT AUTHENTICATED")
-
+        flash("Пожалуйста, сначала войдите в свой аккаунт", "error")
     elif not products:
-        return ('error')
-
+        flash("Error: Product not found", "error")
     else:
         kart = Kart(user_id=current_user.id, products_id=products.products_id)
         session.add(kart)
         session.commit()
-
         session.close()
     return redirect("/")
 
@@ -89,7 +83,32 @@ def i():
 
 @app.route('/cart')
 def cart():
-    return render_template('cart.html')
+    session = db_session.create_session()
+    user_cart = session.query(Kart).filter(Kart.user_id == current_user.id).all()
+    cart_products = []
+    for item in user_cart:
+        product = session.query(Products).get(item.products_id)
+        cart_products.append(product)
+
+    session.close()
+    return render_template('cart.html', cart_products=cart_products)
+
+
+@app.route('/remove_from_cart/<int:product_id>', methods=['POST', 'DELETE'])
+def remove_from_cart(product_id):
+    if request.method in ['POST', 'DELETE']:
+        session = db_session.create_session()
+        kart_item = session.query(Kart).filter(Kart.user_id == current_user.id, Kart.products_id == product_id).first()
+        if kart_item:
+            session.delete(kart_item)
+            session.commit()
+            session.close()
+            flash("Продукт успешно удален из корзины", "success")
+            return redirect("/cart")
+        else:
+            session.close()
+            flash("Ошибка: Продукт не найден в корзине", "error")
+            return redirect("/cart")
 
 
 @app.route('/abot')
@@ -100,6 +119,17 @@ def abot():
 @app.route('/kard')
 def kard():
     return render_template('kard.html')
+
+
+@app.route('/clear_cart', methods=['DELETE'])
+@login_required
+def clear_cart():
+    session = db_session.create_session()
+    session.query(Kart).filter(Kart.user_id == current_user.id).delete()
+    session.commit()
+    session.close()
+    return '', 204
+
 
 
 @app.route('/register', methods=['POST', "GET"])
