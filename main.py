@@ -8,6 +8,8 @@ from data.users import User
 from data.kart import Kart
 from data.products import Products
 import requests
+import os
+from werkzeug.utils import secure_filename
 
 url = 'https://www.cbr-xml-daily.ru/daily_json.js'
 
@@ -21,6 +23,7 @@ cny_value = data['Valute']['CNY']['Value']
 
 app = Flask(__name__)
 app.secret_key = 'Game_Zone_secret_key'
+app.config['AVATARS_FOLDER'] = 'static/avatars'
 db_session.global_init("db/shop.db")
 
 conn = sqlite3.connect('shop.db')
@@ -46,6 +49,39 @@ def index():
     print(current_user)
     return render_template('base.html', categories=categories, products=products, usd_value=usd_value,
                            eur_value=eur_value, bgn_value=bgn_value, cny_value=cny_value, img='static/img/css')
+
+
+@app.route('/set_avatar', methods=['POST'])
+@login_required
+def set_avatar():
+    if 'avatar' in request.files:
+        avatar = request.files['avatar']
+        filename = secure_filename(avatar.filename)
+        avatar_path = os.path.join(app.config['AVATARS_FOLDER'], filename)
+        avatar.save(avatar_path)
+        current_user.avatar = avatar_path
+        db_sess = db_session.create_session()
+        db_sess.merge(current_user)
+        db_sess.commit()
+        db_sess.close()
+    return redirect('/')
+
+
+# Удаление файла аватара
+@app.route('/delete_avatar', methods=['POST'])
+@login_required
+def delete_avatar():
+    if current_user.avatar:
+        try:
+            os.remove(current_user.avatar)
+        except Exception as e:
+            print(f"Ошибка удаления аватара: {e}")
+        current_user.avatar = None
+        db_sess = db_session.create_session()
+        db_sess.merge(current_user)
+        db_sess.commit()
+    return redirect('/')
+
 
 
 @app.route('/category/<int:category_id>')

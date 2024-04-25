@@ -26,6 +26,15 @@
             background-position: center;
             margin-bottom: 10px;
         }
+          .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+
     </style>
 </head>
 <body>
@@ -44,7 +53,16 @@
     </div>
     <div>
         {% if current_user.is_authenticated %}
+            <form action="/delete_avatar" method="post" id="delete-avatar-form">
+                <img src="{{ current_user.avatar }}" alt="Аватар" class="user-avatar" onclick="document.getElementById('delete-avatar-form').submit()">
+            </form>
             <a class="navbar-brand" href="/logout">{{ current_user.nickname }}</a>
+            {% if not current_user.avatar %}
+                <form action="/set_avatar" method="post" enctype="multipart/form-data">
+                    <input type="file" name="avatar">
+                    <input type="submit" value="Установить аватар">
+                </form>
+            {% endif %}
             <button class="cart-button ml-2">
                 <a class="navbar-brand" href="/cart"><img src="/static/img/kart.png" alt="Корзина"></a>
             </button>
