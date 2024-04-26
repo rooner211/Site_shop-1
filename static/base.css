@@ -1,14 +1,14 @@
 @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
 
 body {
-    background: linear-gradient(to bottom right, #282c34, #0f1217); /* Градиентный фон */
+    background: linear-gradient(to bottom right, #282c34, #0f1217);
     color: #fff;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh; /* Делаем контейнер тела (body) на всю высоту видимого экрана */
+    height: 100vh;
     display: flex;
-    flex-direction: column; /* Устанавливаем направление столбцом, чтобы футер был внизу */
+    flex-direction: column;
 }
 
 .header {
@@ -20,7 +20,7 @@ body {
 
 .header h1 {
     margin: 0;
-    color: #ffcc00;
+    color: #ff-cc00;
     font-size: 24px;
     font-weight: bold;
 }
@@ -83,28 +83,28 @@ body {
 }
 
 .footer {
-    background-color: #111; /* Очень тёмно-серый фон */
-    color: #fff; /* Белый цвет текста */
+    background-color: #111;
+    color: #fff;
     padding: 10px;
-    font-size: 8px; /* Треть от изначального размера шрифта */
-    position: fixed; /* Фиксированное позиционирование */
-    bottom: 0; /* Футер будет прижат к нижней части окна */
-    width: 100%; /* Футер будет на всю ширину экрана */
-    height: 50px; /* Высота втрое меньше */
-    display: flex; /* Расположим содержимое футера в строку */
-    justify-content: space-between; /* Разместим элементы по краям */
-    align-items: center; /* Выровняем элементы по вертикали */
+    font-size: 8px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .footer button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    color: #fff; /* Белый цвет текста кнопки */
+    color: #fff;
     transition: background-color 0.3s;
 }
 
 .footer button:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Прозрачный фон при наведении */
+    background-color: rgba(255, 255, 255, 0.1);
 }
 

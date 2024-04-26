@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, flash, jsonify
+from flask import Flask, render_template, flash
 from flask import request, redirect
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from data import db_session
@@ -56,15 +56,23 @@ def index():
 def set_avatar():
     if 'avatar' in request.files:
         avatar = request.files['avatar']
-        filename = secure_filename(avatar.filename)
-        avatar_path = os.path.join(app.config['AVATARS_FOLDER'], filename)
-        avatar.save(avatar_path)
-        current_user.avatar = avatar_path
-        db_sess = db_session.create_session()
-        db_sess.merge(current_user)
-        db_sess.commit()
-        db_sess.close()
-    return redirect('/')
+        if avatar.filename != '':
+            filename = secure_filename(avatar.filename)
+            avatar_path = os.path.join(app.config['AVATARS_FOLDER'], filename)
+            avatar.save(avatar_path)
+            current_user.avatar = avatar_path
+            db_sess = db_session.create_session()
+            db_sess.merge(current_user)
+            db_sess.commit()
+            db_sess.close()
+    return redirect('/user')
+
+
+@app.context_processor
+def inject_user_avatar():
+    if current_user.is_authenticated:
+        return dict(user_avatar=current_user.avatar)
+    return dict(user_avatar=None)
 
 
 # Удаление файла аватара
@@ -80,8 +88,7 @@ def delete_avatar():
         db_sess = db_session.create_session()
         db_sess.merge(current_user)
         db_sess.commit()
-    return redirect('/')
-
+    return redirect('/user')
 
 
 @app.route('/category/<int:category_id>')
@@ -93,7 +100,8 @@ def category(category_id):
     session.close()
     return render_template('base.html', categories=categories, products=products, current_category=category_name,
                            usd_value=usd_value, eur_value=eur_value, bgn_value=bgn_value, cny_value=cny_value,
-                           img='static/img/css')
+                           img='static/img/css',
+                           user_avatar=current_user.avatar if current_user.is_authenticated else None)
 
 
 @app.route('/buy_game/<int:products_id>')
@@ -167,7 +175,6 @@ def clear_cart():
     return '', 204
 
 
-
 @app.route('/register', methods=['POST', "GET"])
 def register():
     if request.method == "POST":
@@ -212,6 +219,12 @@ def login():
             return redirect('/login')
 
     return render_template('login.html')
+
+
+@app.route('/user')
+@login_required
+def user():
+    return render_template('user.html', current_user=current_user)
 
 
 @app.route('/logout')

@@ -43,11 +43,10 @@
             margin-top: 20px;
         }
 
-        /* Устанавливаем фиксированный размер для изображений */
         img.product-image {
-            width: 250px; /* Измените значение по вашему усмотрению */
-            height: 250px; /* Измените значение по вашему усмотрению */
-            object-fit: cover; /* Обрезаем изображение до указанных размеров */
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -67,6 +66,7 @@
                 </script>
             {% endif %}
         {% endwith %}
+
         {% with messages = get_flashed_messages(category_filter=["error"]) %}
             {% if messages %}
                 <div class="alert alert-danger" role="alert" id="error-alert">
@@ -79,6 +79,7 @@
                 </script>
             {% endif %}
         {% endwith %}
+
         {% for product in cart_products %}
         <div class="product">
             <h3>{{ product.name }}</h3>
@@ -90,14 +91,16 @@
             </form>
         </div>
         {% endfor %}
+
         {% set total_product_price = cart_products | map(attribute='price') | sum %}
         {% set total_product_price_rounded = total_product_price | round(2) %}
         <p>Общая сумма цен продуктов в корзине: ${{ total_product_price_rounded }}</p>
-        {% if total_product_price > 0 %}
+        {% if cart_products %}
             <button class="btn btn-primary mr-2" onclick="window.location.href='/kard'">Оформить заказ</button>
         {% else %}
-            <p>Невозможно оформить заказ, так как сумма товаров в корзине равна 0</p>
+            <p>Невозможно оформить заказ, так как корзина пуста</p>
         {% endif %}
+
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -31,7 +31,6 @@
     <p class="error-message">Все поля должны быть заполнены!</p>
     <p class="register-message">Зарегистрированы? <a href="/login">Войдите</a>.</p>
     <script>
-        // Функция для проверки заполненности всех полей формы
         function checkForm() {
             var name = document.getElementById("name").value;
             var nickname = document.getElementById("nickname").value;
@@ -41,18 +40,15 @@
 
             var errorMessage = document.querySelector(".error-message");
 
-            // Если все поля заполнены, делаем кнопку активной
             if (name !== "" && nickname !== "" && email !== "" && password !== "" && country !== "") {
                 document.getElementById("registerButton").disabled = false;
                 errorMessage.style.display = "none";
             } else {
-                // В противном случае делаем кнопку неактивной и показываем сообщение об ошибке
                 document.getElementById("registerButton").disabled = true;
                 errorMessage.style.display = "block";
             }
         }
 
-        // Добавляем обработчик события для каждого поля ввода
         var inputs = document.querySelectorAll("input");
         inputs.forEach(function(input) {
             input.addEventListener("input", checkForm);

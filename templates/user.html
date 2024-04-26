@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <style>
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .avatar-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <h1>GameZone</h1>
+    </div>
+    <div>
+        <a class="navbar-brand" href="/">Домой</a>
+        <button class="cart-button ml-2">
+            <a class="navbar-brand" href="/cart"><img src="/static/img/kart.png" alt="Корзина"></a>
+        </button>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Добро пожаловать, {{ current_user.nickname }}!</h2>
+    {% if current_user.avatar %}
+        <img src="{{ current_user.avatar }}" alt="Аватар" class="user-avatar">
+        <form action="/delete_avatar" method="post" class="avatar-form">
+            <input type="submit" value="Удалить аватар">
+        </form>
+    {% else %}
+        <p>Нет Аватара</p>
+    {% endif %}
+    <form action="/set_avatar" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar">
+        <input type="submit" value="Установить аватар">
+    </form>
+    <p><a href="/logout">Выйти</a></p>
+</div>
+<footer class="container">
+    <p>© 2024 GameZone, Cop. · <a href="/abot">About</a></p>
+</footer>
+
+</body>
+</html>
