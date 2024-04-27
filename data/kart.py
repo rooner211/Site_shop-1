@@ -5,7 +5,7 @@ from .db_session import SqlAlchemyBase
 
 class Kart(SqlAlchemyBase):
     __tablename__ = 'kart'
-    id = sqlalchemy.Column(sqlalchemy.Integer,
+    kart_id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))
